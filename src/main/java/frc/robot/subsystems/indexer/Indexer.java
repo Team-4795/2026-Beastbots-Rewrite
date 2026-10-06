@@ -33,8 +33,4 @@ public class Indexer extends SubsystemBase {
   public void exampleMethod() {
     indexerIO.exampleMethod();
   }
-
-
-
-  
 }

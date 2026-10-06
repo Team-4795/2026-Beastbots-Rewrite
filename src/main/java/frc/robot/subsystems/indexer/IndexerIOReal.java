@@ -1,9 +1,15 @@
 package frc.robot.subsystems.indexer;
 
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.SparkLowLevel;
 
 public class IndexerIOReal implements IndexerIO {
   // TODO: Add your motors here!
+  private SparkMax motor = new SparkMax(IndexerConstants.motorPort, SparkLowLevel.MotorType.kBrushless);
+  private double currentVoltage = 0;
+  private RelativeEncoder encoder = motor.getEncoder();
   // Tip: use Rev Robotics' SparkMax motor controllers
 
   // Motor config
@@ -11,21 +17,20 @@ public class IndexerIOReal implements IndexerIO {
 
   // Constructor
   public IndexerIOReal() {
+
+
     // Sets a limit on current going to the motor so that the motor doesn't fry itself
     config.smartCurrentLimit(IndexerConstants.CURRENT_LIMIT);
 
     // TODO: Set the rest of your motor configs and apply them!
-
-
-
-    
   }
 
   // TODO: Add a setVoltage method here
-
-
-
-
+  @Override
+  public void setVoltage(double voltage){
+    motor.setVoltage(voltage);
+    currentVoltage = voltage;
+  }
 
   // Do not touch!
   @Override
