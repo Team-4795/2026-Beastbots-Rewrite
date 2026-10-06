@@ -1,11 +1,14 @@
 package frc.robot.subsystems.shooter;
 
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 public class ShooterIOReal implements ShooterIO {
   // TODO: Add your motors here!
   // Tip: use Rev Robotics' SparkMax motor controllers
-
+  private SparkMax motor1 = new SparkMax(0,MotorType.kBrushless);
+  private SparkMax motor2 = new SparkMax(0, MotorType.kBrushless);
   // Motor config
   private final SparkMaxConfig config = new SparkMaxConfig();
 
@@ -19,6 +22,11 @@ public class ShooterIOReal implements ShooterIO {
   }
 
   // TODO: Add a setVoltage method here
+  @Override
+  public void setVoltage(double voltage) {  
+    motor1.setVoltage(voltage);
+    motor2.setVoltage(voltage);
+  }
 
   // Do not touch!
   @Override
