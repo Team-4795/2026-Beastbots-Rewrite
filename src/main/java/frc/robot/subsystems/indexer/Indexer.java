@@ -30,11 +30,7 @@ public class Indexer extends SubsystemBase {
   }
 
   // TODO: Add methods here:
-  public void exampleMethod() {
-    indexerIO.exampleMethod();
+  public void setVoltage(double voltage) {
+    indexerIO.setVoltage(voltage);
   }
-
-
-
-  
 }

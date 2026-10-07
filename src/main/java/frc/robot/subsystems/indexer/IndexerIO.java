@@ -8,19 +8,9 @@ public interface IndexerIO {
   public static class IndexerIOInputs {}
 
   // TODO: Add your default methods here:
-  public default void exampleMethod() {
+  public default void exampleMethod() {}
 
-  }
-  
-  public default void setVoltage(double voltage){
-    
-  }
-  
-
-
-
-
-  
+  public default void setVoltage(double voltage) {}
 
   // Do not touch this either!
   public default void updateInputs(IndexerIOInputs inputs) {}
