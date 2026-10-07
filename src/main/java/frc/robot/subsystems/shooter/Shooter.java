@@ -31,6 +31,6 @@ public class Shooter extends SubsystemBase {
 
   // TODO: Add methods here:
   public void exampleMethod() {
-    shooterIO.exampleMethod();
+    // shooterIO.exampleMethod();
   }
 }
