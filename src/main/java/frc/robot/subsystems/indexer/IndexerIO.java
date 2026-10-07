@@ -11,7 +11,7 @@ public interface IndexerIO {
   public default void exampleMethod() {}
 
 
-
+  public default void setVoltage(double v) {}
   
 
   // Do not touch this either!

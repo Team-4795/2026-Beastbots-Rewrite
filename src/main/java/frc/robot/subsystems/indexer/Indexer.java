@@ -35,6 +35,8 @@ public class Indexer extends SubsystemBase {
   }
 
 
-
+  public void setVoltage(double v) {
+    indexerIO.setVoltage(v);
+  }
   
 }
