@@ -22,6 +22,9 @@ import frc.robot.subsystems.drive.GyroIORedux;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOSpark;
+import frc.robot.subsystems.indexer.Indexer;
+import frc.robot.subsystems.indexer.IndexerIOReal;
+
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -33,7 +36,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 public class RobotContainer {
   // Subsystems
   private final Drive drive;
-
+  private final Indexer indexer;
   // Controller
   private final CommandXboxController m_driverController = Constants.OIConstants.driverController;
   private final CommandXboxController m_operatorController =
@@ -54,6 +57,7 @@ public class RobotContainer {
                 new ModuleIOSpark(1),
                 new ModuleIOSpark(2),
                 new ModuleIOSpark(3));
+        indexer = Indexer.initialize(new IndexerIOReal());
         break;
 
       case SIM:
@@ -65,6 +69,7 @@ public class RobotContainer {
                 new ModuleIOSim(),
                 new ModuleIOSim(),
                 new ModuleIOSim());
+                        indexer = Indexer.initialize(new IndexerIOReal());
         break;
 
       default:
@@ -76,6 +81,7 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {},
                 new ModuleIO() {});
+         indexer = Indexer.initialize(new IndexerIOReal());
         break;
     }
 
@@ -124,6 +130,13 @@ public class RobotContainer {
                             new Pose2d(drive.getPose().getTranslation(), Rotation2d.kZero)),
                     drive)
                 .ignoringDisable(true));
+    //m_driverController.leftTrigger().whileTrue(Commands.run(()-> indexer.setVoltage(8)));
+   // m_driverController.leftBumper().whileTrue(Commands.run(()-> indexer.setVoltage(-8)));
+    m_operatorController.x().ontrue(Commands.parallel(
+    Commands.run(()-> indexer.setVoltage(8));
+    Commands.run(()-> indexer.setVoltage(-3))));
+
+
   }
 
   /**
