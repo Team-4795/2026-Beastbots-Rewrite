@@ -8,7 +8,10 @@ public interface ShooterIO {
   public static class ShooterIOInputs {}
 
   // TODO: Add your default methods here:
-  public default void exampleMethod() {}
+  public default void SetVoltage(double v)
+  {
+    
+  }
 
   // Do not touch this either!
   public default void updateInputs(ShooterIOInputs inputs) {}
