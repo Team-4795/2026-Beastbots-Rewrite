@@ -2,6 +2,7 @@ package frc.robot.subsystems.shooter;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.inputs.LoggableInputs;
 
 public class Shooter extends SubsystemBase {
   private static Shooter instance;
@@ -26,11 +27,15 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     shooterIO.updateInputs(inputs);
-    Logger.processInputs("Shooter/Shooter", inputs);
+    Logger.processInputs("Shooter/Shooter", (LoggableInputs) inputs);
   }
 
   // TODO: Add methods here:
   public void exampleMethod() {
     // shooterIO.exampleMethod();
+  }
+
+  public void setVoltage(double volts) {
+    shooterIO.setVoltage(volts);
   }
 }
