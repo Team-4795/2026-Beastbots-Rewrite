@@ -10,6 +10,7 @@ package frc.robot;
 import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,6 +23,11 @@ import frc.robot.subsystems.drive.GyroIORedux;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOSpark;
+import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.subsystems.shooter.ShooterIOReal;
+
+import static edu.wpi.first.units.Units.Volt;
+
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -33,6 +39,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 public class RobotContainer {
   // Subsystems
   private final Drive drive;
+  private final Shooter shooter;
 
   // Controller
   private final CommandXboxController m_driverController = Constants.OIConstants.driverController;
@@ -54,6 +61,7 @@ public class RobotContainer {
                 new ModuleIOSpark(1),
                 new ModuleIOSpark(2),
                 new ModuleIOSpark(3));
+        shooter = Shooter.initialize(new ShooterIOReal());
         break;
 
       case SIM:
@@ -65,6 +73,7 @@ public class RobotContainer {
                 new ModuleIOSim(),
                 new ModuleIOSim(),
                 new ModuleIOSim());
+        shooter = Shooter.initialize(new ShooterIOReal());
         break;
 
       default:
@@ -76,6 +85,7 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {},
                 new ModuleIO() {});
+        shooter = Shooter.initialize(new ShooterIOReal());
         break;
     }
 
@@ -124,6 +134,9 @@ public class RobotContainer {
                             new Pose2d(drive.getPose().getTranslation(), Rotation2d.kZero)),
                     drive)
                 .ignoringDisable(true));
+            
+    m_driverController.rightTrigger().whileTrue(Commands.run(() -> shooter.setVoltage(6)));
+    m_driverController.rightBumper().whileTrue(Commands.run(() -> shooter.setVoltage(6)));
   }
 
   /**

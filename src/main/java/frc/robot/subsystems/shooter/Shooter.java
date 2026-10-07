@@ -30,7 +30,7 @@ public class Shooter extends SubsystemBase {
   }
 
   // TODO: Add methods here:
-  public void exampleMethod() {
-    shooterIO.exampleMethod();
+  public void setVoltage(double voltage) {
+    shooterIO.setVoltage(voltage);
   }
 }
