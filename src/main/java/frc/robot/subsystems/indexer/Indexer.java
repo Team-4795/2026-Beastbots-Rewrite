@@ -29,7 +29,6 @@ public class Indexer extends SubsystemBase {
     Logger.processInputs("Indexer/Indexer", inputs);
   }
 
-  // TODO: Add methods here:
   public void setVoltage(double volts) {
     indexerIO.setVoltage(volts);
   }

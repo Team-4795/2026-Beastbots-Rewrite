@@ -3,7 +3,7 @@ package frc.robot.subsystems.shooter;
 import org.littletonrobotics.junction.AutoLog;
 
 public interface ShooterIO {
-  // Do not touch this!
+  // Do not touch this! Automatically logs stuff put in here
   @AutoLog
   public static class ShooterIOInputs {
     public double voltage;
@@ -18,6 +18,6 @@ public interface ShooterIO {
 
   public default void configure() {}
 
-  // Do not touch this either!
+  // Do not touch this either! Called every 20 ms for logging.
   public default void updateInputs(ShooterIOInputs inputs) {}
 }

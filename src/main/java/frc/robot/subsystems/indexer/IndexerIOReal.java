@@ -20,8 +20,13 @@ public class IndexerIOReal implements IndexerIO {
   public IndexerIOReal() {
     // Sets a limit on current going to the motor so that the motor doesn't fry itself
     config.smartCurrentLimit(IndexerConstants.CURRENT_LIMIT);
+
+    // Allow motor to coast while idle, we have no need for the motor to maintain position when not
+    // running
     config.idleMode(IdleMode.kCoast);
-    config.encoder.velocityConversionFactor(IndexerConstants.GEARING / 60); // convert to rps
+
+    // Multiplies the encoder output (motor RPM) by a factor to convert to mechanism RPS
+    config.encoder.velocityConversionFactor(IndexerConstants.GEARING / 60);
 
     // Apply the config
     motor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -35,6 +40,7 @@ public class IndexerIOReal implements IndexerIO {
   }
 
   // Do not touch!
+  // Periodically logs the stuff we put in here
   @Override
   public void updateInputs(IndexerIOInputs inputs) {
     inputs.voltage = voltage;

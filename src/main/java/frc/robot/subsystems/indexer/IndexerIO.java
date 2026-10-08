@@ -11,7 +11,6 @@ public interface IndexerIO {
     public double current;
   }
 
-  // TODO: Add your default methods here:
   public default void setVoltage(double v) {}
 
   // Do not touch this either! Called every 20 ms for logging.

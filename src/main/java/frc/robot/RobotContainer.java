@@ -139,11 +139,21 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true));
 
-    m_driverController.rightTrigger().whileTrue(Commands.run(() -> shooter.setVoltage(10)));
-    m_driverController.rightBumper().whileTrue(Commands.run(() -> shooter.setVoltage(-10)));
+    // Shooter bindings
+    m_driverController
+        .rightTrigger()
+        .whileTrue(Commands.run(() -> shooter.setVoltage(10))); // Run shooter
+    m_driverController
+        .rightBumper()
+        .whileTrue(Commands.run(() -> shooter.setVoltage(-10))); // Reverse shooter
 
-    m_driverController.leftTrigger().whileTrue(Commands.run(() -> indexer.setVoltage(6)));
-    m_driverController.leftBumper().whileTrue(Commands.run(() -> indexer.setVoltage(-6)));
+    // Indexer bindings
+    m_driverController
+        .leftTrigger()
+        .whileTrue(Commands.run(() -> indexer.setVoltage(6))); // Run indexer
+    m_driverController
+        .leftBumper()
+        .whileTrue(Commands.run(() -> indexer.setVoltage(-6))); // Reverse indexer
   }
 
   /**
