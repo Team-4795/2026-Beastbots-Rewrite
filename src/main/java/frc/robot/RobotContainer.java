@@ -22,6 +22,12 @@ import frc.robot.subsystems.drive.GyroIORedux;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOSpark;
+import frc.robot.subsystems.indexer.Indexer;
+import frc.robot.subsystems.indexer.IndexerIO;
+import frc.robot.subsystems.indexer.IndexerIOReal;
+import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.subsystems.shooter.ShooterIO;
+import frc.robot.subsystems.shooter.ShooterIOReal;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -33,6 +39,8 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 public class RobotContainer {
   // Subsystems
   private final Drive drive;
+  private final Indexer indexer;
+  private final Shooter shooter;
 
   // Controller
   private final CommandXboxController m_driverController = Constants.OIConstants.driverController;
@@ -54,6 +62,8 @@ public class RobotContainer {
                 new ModuleIOSpark(1),
                 new ModuleIOSpark(2),
                 new ModuleIOSpark(3));
+        indexer = Indexer.initialize(new IndexerIOReal());
+        shooter = Shooter.initialize(new ShooterIOReal());
         break;
 
       case SIM:
@@ -65,6 +75,8 @@ public class RobotContainer {
                 new ModuleIOSim(),
                 new ModuleIOSim(),
                 new ModuleIOSim());
+        indexer = Indexer.initialize(new IndexerIO() {});
+        shooter = Shooter.initialize(new ShooterIO() {});
         break;
 
       default:
@@ -76,6 +88,8 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {},
                 new ModuleIO() {});
+        indexer = Indexer.initialize(new IndexerIO() {});
+        shooter = Shooter.initialize(new ShooterIO() {});
         break;
     }
 
@@ -124,6 +138,12 @@ public class RobotContainer {
                             new Pose2d(drive.getPose().getTranslation(), Rotation2d.kZero)),
                     drive)
                 .ignoringDisable(true));
+
+    m_driverController.rightTrigger().whileTrue(Commands.run(() -> shooter.setVoltage(10)));
+    m_driverController.rightBumper().whileTrue(Commands.run(() -> shooter.setVoltage(-10)));
+
+    m_driverController.leftTrigger().whileTrue(Commands.run(() -> indexer.setVoltage(6)));
+    m_driverController.leftBumper().whileTrue(Commands.run(() -> indexer.setVoltage(-6)));
   }
 
   /**

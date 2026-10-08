@@ -29,8 +29,7 @@ public class Shooter extends SubsystemBase {
     Logger.processInputs("Shooter/Shooter", inputs);
   }
 
-  // TODO: Add methods here:
-  public void exampleMethod() {
-    shooterIO.exampleMethod();
+  public void setVoltage(double volts) {
+    shooterIO.setVoltage(volts);
   }
 }

@@ -3,17 +3,17 @@ package frc.robot.subsystems.indexer;
 import org.littletonrobotics.junction.AutoLog;
 
 public interface IndexerIO {
-  // Do not touch this!
+  // Do not touch this! Automatically logs stuff put in here
   @AutoLog
-  public static class IndexerIOInputs {}
+  public static class IndexerIOInputs {
+    public double voltage;
+    public double velocity;
+    public double current;
+  }
 
   // TODO: Add your default methods here:
-  public default void exampleMethod() {}
+  public default void setVoltage(double v) {}
 
-
-
-  
-
-  // Do not touch this either!
+  // Do not touch this either! Called every 20 ms for logging.
   public default void updateInputs(IndexerIOInputs inputs) {}
 }
