@@ -8,7 +8,7 @@ public class AutoCommands {
   private static Drive drive = Drive.getInstance();
 
   // An example command for syntax.
-  public Command exampleCommand() {
+  public static Command exampleCommand() {
     return Commands.run(() -> drive.stopWithX());
   }
 }

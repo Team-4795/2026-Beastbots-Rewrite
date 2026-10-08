@@ -28,6 +28,8 @@ import frc.robot.subsystems.indexer.IndexerIOReal;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterIO;
 import frc.robot.subsystems.shooter.ShooterIOReal;
+import frc.robot.util.NamedCommandManager;
+
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -98,6 +100,9 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
+
+    // Register named commands for use in Pathplanner
+    NamedCommandManager.registerNamedCommands();
   }
 
   /**
