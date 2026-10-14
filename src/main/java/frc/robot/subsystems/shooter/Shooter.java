@@ -21,6 +21,8 @@ public class Shooter extends SubsystemBase {
 
   private Shooter(ShooterIO io) {
     shooterIO = io;
+
+    setDefaultCommand(runOnce(() -> this.setGoal(0)));
   }
 
   @Override
@@ -31,5 +33,9 @@ public class Shooter extends SubsystemBase {
 
   public void setVoltage(double volts) {
     shooterIO.setVoltage(volts);
+  }
+
+  public void setGoal(double goalRPS) {
+    shooterIO.setGoal(goalRPS);
   }
 }

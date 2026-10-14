@@ -2,17 +2,8 @@
   "robotWidth": 0.9,
   "robotLength": 0.9,
   "holonomicMode": true,
-  "pathFolders": [
-    "BTB",
-    "OTB",
-    "Top small intake mid",
-    "small intake mid bottom"
-  ],
-  "autoFolders": [
-    "BTB",
-    "Back OTB",
-    "OTB"
-  ],
+  "pathFolders": [],
+  "autoFolders": [],
   "defaultMaxVel": 5.0,
   "defaultMaxAccel": 4.0,
   "defaultMaxAngVel": 540.0,

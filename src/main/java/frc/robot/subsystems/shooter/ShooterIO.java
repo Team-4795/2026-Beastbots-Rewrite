@@ -16,6 +16,8 @@ public interface ShooterIO {
 
   public default void setVoltage(double volts) {}
 
+  public default void setGoal(double goalRPS) {}
+
   public default void configure() {}
 
   // Do not touch this either! Called every 20 ms for logging.

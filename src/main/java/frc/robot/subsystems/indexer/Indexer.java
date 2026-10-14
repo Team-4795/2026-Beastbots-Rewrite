@@ -21,6 +21,8 @@ public class Indexer extends SubsystemBase {
 
   private Indexer(IndexerIO io) {
     indexerIO = io;
+
+    setDefaultCommand(runOnce(() -> this.setVoltage(0)));
   }
 
   @Override

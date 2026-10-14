@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.AutoCommands;
 import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
@@ -29,7 +30,6 @@ import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterIO;
 import frc.robot.subsystems.shooter.ShooterIOReal;
 import frc.robot.util.NamedCommandManager;
-
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -144,21 +144,17 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true));
 
-    // Shooter bindings
-    m_driverController
-        .rightTrigger()
-        .whileTrue(Commands.run(() -> shooter.setVoltage(10))); // Run shooter
-    m_driverController
-        .rightBumper()
-        .whileTrue(Commands.run(() -> shooter.setVoltage(-10))); // Reverse shooter
-
-    // Indexer bindings
+    // Shooter/Intake bindings
+    m_driverController.rightTrigger().whileTrue(AutoCommands.setGoalShooter(60)); // Run shooter
     m_driverController
         .leftTrigger()
-        .whileTrue(Commands.run(() -> indexer.setVoltage(6))); // Run indexer
-    m_driverController
-        .leftBumper()
-        .whileTrue(Commands.run(() -> indexer.setVoltage(-6))); // Reverse indexer
+        .whileTrue(AutoCommands.setGoalShooter(30)); // TODO tune lower rps for intaking only
+
+    // Indexer bindings
+    m_driverController.rightBumper().whileTrue(AutoCommands.runIndexer()); // spin indexer
+    m_driverController.y().whileTrue(AutoCommands.reverseIndexer()); // reverse indexer to unjam
+
+    m_operatorController.y().whileTrue(AutoCommands.outtake()); // reverse shooter and indexer
   }
 
   /**

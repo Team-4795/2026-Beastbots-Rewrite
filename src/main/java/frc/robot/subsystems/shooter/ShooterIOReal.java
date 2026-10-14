@@ -2,6 +2,8 @@ package frc.robot.subsystems.shooter;
 
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
+import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -17,6 +19,8 @@ public class ShooterIOReal implements ShooterIO {
   // Motor config
   private final SparkMaxConfig config = new SparkMaxConfig();
 
+  private SparkClosedLoopController controller;
+
   // Mostly for logging
   private double voltage;
   private double goalRPS;
@@ -29,8 +33,14 @@ public class ShooterIOReal implements ShooterIO {
   // Sets the voltage of the left motor, the other motor will follow (because of config)
   @Override
   public void setVoltage(double volts) {
-    leftMotor.setVoltage(volts);
     voltage = volts;
+    leftMotor.setVoltage(volts);
+  }
+
+  @Override
+  public void setGoal(double goal) {
+    goalRPS = goal;
+    controller.setSetpoint(goal, ControlType.kVelocity);
   }
 
   @Override
@@ -50,7 +60,10 @@ public class ShooterIOReal implements ShooterIO {
     // Multiplies the encoder output (motor RPM) by a factor to convert to mechanism RPS
     config.encoder.velocityConversionFactor(ShooterConstants.GEARING / 60);
 
-    // TODO: PID things will go here:
+    // PID in config
+    config.closedLoop.pid(ShooterConstants.kP, ShooterConstants.kI, ShooterConstants.kD);
+    config.closedLoop.feedForward.sva(
+        ShooterConstants.kS, ShooterConstants.kV, ShooterConstants.kA);
 
     // apply config to left motor
     leftMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -64,9 +77,10 @@ public class ShooterIOReal implements ShooterIO {
         config,
         ResetMode.kResetSafeParameters,
         PersistMode.kPersistParameters); // apply config to right motor
+
+    controller = leftMotor.getClosedLoopController();
   }
 
-  // Do not touch!
   // Periodically logs the stuff we put in here
   @Override
   public void updateInputs(ShooterIOInputs inputs) {
